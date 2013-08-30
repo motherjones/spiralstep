@@ -60,6 +60,7 @@ var make_social_web = function(dataset) {
         created_social_groups[dataset[i].socialgroup].children.push(
             dataset[i]
         )
+        dataset[i].image = 'http://i.imgur.com/neeKqKL.gif';
 
         dust.render('tooltip', dataset[i], function(err, out) {
             dataset[i].tooltip = out
@@ -111,6 +112,14 @@ var make_social_web = function(dataset) {
           .attr("dy", ".3em")
           .style("text-anchor", "middle")
           .text(function(d) { return d.className.substring(0, d.r / 3); });
+
+      node.append("image")
+          .attr("xlink:href", function(d) { return d.image })
+          .attr("x", function(d) { return -(d.r / 2) })
+          .attr("y", function(d) { return -(d.r / 2) })
+          .attr("width", function(d) { return d.r })
+          .attr("height", function(d) { return d.r });
+
 
       var buttons = []
 
@@ -177,6 +186,7 @@ var make_social_web = function(dataset) {
             packageName: name,
             className: node.name,
             value: (node.size ? node.size : 1),
+            image: (node.image),
             tooltip: node.tooltip
         });
       }
