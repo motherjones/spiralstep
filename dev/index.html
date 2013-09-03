@@ -158,7 +158,7 @@ var make_social_web = function(dataset) {
           .style('font', '20px sans-serif')
           .style("fill", function(d) { return color(d.packageName); })
           .style('fill-opacity', '1')
-          .style('stroke', '#FFFFFF')
+          .style("stroke", function(d) { return color(d.packageName); })
           .style('stroke-width', '1px')
           .style('stroke-linecap', 'butt')
           .style('stroke-linejoin', 'miter')
