@@ -12,6 +12,12 @@
         text {
           font: 10px sans-serif;
         }
+        #tooltip {
+            background-color: white;
+            border-radius: 5px;
+            border: 2px solid black;
+            padding: 1em;
+        }
 
         </style>
     </head>
@@ -92,6 +98,7 @@ var make_social_web = function(dataset) {
         .attr("width", diameter)
         .attr("height", diameter)
         .attr("class", "bubble")
+        .attr('id', 'spiral_stepper')
 
     var defs = svg
         .append('defs')
@@ -174,13 +181,22 @@ var make_social_web = function(dataset) {
           .attr("r", function(d) { return d.r + stroke_width; })
           .style("fill", '#FFFFFF')
           .style('opacity', '0')
+          .attr('data-tooltip', function(d) { return d.tooltip });
 
           //ADD TOOLTIP HERE
+      
+          var tooltip = jQuery('<div id="tooltip" style="display: none; position: absolute;"><p>text</p></div>');
+      jQuery('#spiral_stepper').before(tooltip);
 
-      node.append("title")
-          .text(function(d) { 
-              return d.tooltip;
-          });
+      jQuery('svg circle.node').bind('mouseout', function(){
+          tooltip.css('display', 'none');
+      });
+      jQuery('svg circle.node').bind('mousemove', function(e){
+          tooltip.css('left', e.pageX + 10)
+            .css('top', e.pageY + 10)
+            .css('display', 'block')
+            .html(jQuery(this).attr('data-tooltip'));
+      });
 
       var buttons = []
 
