@@ -10,13 +10,16 @@
         <style>
 
         text {
-          font: 10px sans-serif;
+          font: 20px sans-serif;
         }
         #tooltip {
             background-color: white;
             border-radius: 5px;
             border: 2px solid black;
             padding: 1em;
+        }
+        #group_blurbs p {
+            display: none;
         }
 
         </style>
@@ -29,6 +32,23 @@
         <a href="#" id="social_next">
             &gt;&gt;
         </a>
+    </div>
+    <div id="group_blurbs">
+        <p id="all">
+        all
+        </p>
+        <p id="MrWellstoneIpresume">
+        mr wellston
+        </p>
+        <p id="CapitolHill">
+            capital hill blurb goes where
+        </p>
+        <p id="MinnesotaGovernment">
+        min gov
+        </p>
+        <p id="NationalAdvocacyGroups">
+        nat adv
+        </p>
     </div>
 <script>
     //URL to public google spreadsheet
@@ -162,7 +182,6 @@ var make_social_web = function(dataset) {
           .attr("y", function(d) { return (d.y) })
           .attr('clip-path', function(d) { return 'url(#' + d.className.replace(/\s/, '') + 'clippath)' })
           .style("text-anchor", "middle")
-          .style('font', '20px sans-serif')
           .style("fill", function(d) { return color(d.packageName); })
           .style('fill-opacity', '1')
           .style("stroke", function(d) { return color(d.packageName); })
@@ -204,6 +223,8 @@ var make_social_web = function(dataset) {
       all_button.click(function() {
           jQuery('#social_buttons button').removeClass('selected');
           all_button.addClass('selected');
+          jQuery('#group_blurbs p').css('display', 'none');
+          jQuery('#group_blurbs #all').css('display', 'block');
           node
             .transition()
             .style('opacity', 0)
@@ -219,6 +240,8 @@ var make_social_web = function(dataset) {
               button.click(function() {
                   jQuery('#social_buttons button').removeClass('selected');
                   button.addClass('selected');
+                  jQuery('#group_blurbs p').css('display', 'none');
+                  jQuery('#group_blurbs #' + group.replace(/[^a-zA-Z0-9_]/g, '')).css('display', 'block');
                   node
                     .transition()
                     .style('opacity', function(d) {
